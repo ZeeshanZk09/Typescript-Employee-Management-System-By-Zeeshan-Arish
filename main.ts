@@ -1,0 +1,127 @@
+#! /usr/bin/env node
+
+import inquirer from "inquirer";
+interface Employee {
+    id: string;
+    name:string;
+    salary: number;
+}
+const employeeList: Employee[]=[];
+async function addEmployee() {
+    const answers = await inquirer.prompt([
+        {
+            type: 'input', 
+            name: 'id', 
+            message: 'Enter empolyee ID:'
+        },
+        {
+            type: 'input', 
+            name: 'name', 
+            message: 'Enter empolyee name:'
+        },
+        {
+            type: 'input', 
+            name: 'salary', 
+            message: 'Enter empolyee salary:'
+        },
+    ]);
+    employeeList.push(answers as Employee);
+    console.log('Employee addad successfully!');
+    console.log(employeeList);
+    
+}
+
+async function editEmployee(){
+    const  id  = await inquirer.prompt(
+        [
+            {
+                 type: 'input', 
+                 name: 'id', 
+                 message: 'Enter employee ID to edit:'
+            }
+        ]
+    );
+    const index = employeeList.findIndex(emp => emp.id === id);
+    if(index !== -1){
+        const updates = await inquirer.prompt(
+            [
+                {
+                    tyep : 'input', 
+                    name:'name', 
+                    message: ' Enter new name:', 
+                    default: employeeList[index].name
+                },
+                {
+                    tyep : 'input', 
+                    name:'salary', 
+                    message: ' Enter new salary:', 
+                    default: employeeList[index].salary
+                },
+            ]
+        );
+        employeeList[index] = {...employeeList[index], ...updates};
+    }else{
+        console.log('Employee not found!');
+    }
+    menu();
+}
+
+async function deleteEmployee(){
+    const  id  = await inquirer.prompt([
+        { 
+            type: 'input', 
+            name:'id', 
+            message:'Enter employee ID to delete:'
+        }
+    ]
+);
+    const index = employeeList.findIndex(emp => emp.id === id);
+    if(index !== -1){
+        employeeList.splice(index, 1);
+        console.log('Employee deleted sucessfully!');
+    }else{
+        console.log('Employee not found!');
+    }
+    menu();
+}
+
+async function Exit() {
+    console.log('Exiting...');
+    process.exit()
+}
+async function menu() {
+    const  option  = await inquirer.prompt([
+        {
+            type : 'list',
+            name: 'optionsList',
+            message: 'Choose an object:',
+            choices: [
+                                'Add Employee', 
+                                'Edit Employee', 
+                                'Delete Employee', 
+                                'Exit'
+                           ]
+        }
+    ]
+    );
+    switch (option.optionsList) {
+        case 'Add Employee':
+            await addEmployee();
+            break;
+        case 'Edit Employee':
+            await editEmployee();
+            break;
+        case 'Delete Employee':
+            await deleteEmployee();
+            break;
+        case 'Exit':
+            await Exit();
+            break;
+        default :  
+            console.log('Something Went Wrong!!!');
+            break;
+    }
+
+}
+
+menu();
