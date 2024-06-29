@@ -6,29 +6,29 @@ async function addEmployee() {
         {
             type: 'input',
             name: 'id',
-            message: 'Enter empolyee ID:'
+            message: 'Enter Empolyee ID:'
         },
         {
             type: 'input',
             name: 'name',
-            message: 'Enter empolyee name:'
+            message: 'Enter Empolyee name:'
         },
         {
             type: 'input',
             name: 'salary',
-            message: 'Enter empolyee salary:'
+            message: 'Enter Empolyee salary:'
         },
     ]);
     employeeList.push(answers);
-    console.log('Employee addad successfully!');
-    console.log(employeeList);
+    console.log('Employee added successfully!');
+    console.log(`Employee ID = ${answers.id}, Employee Name = ${answers.name}, Employee Salary = ${answers.salary}`);
 }
 async function editEmployee() {
     const id = await inquirer.prompt([
         {
             type: 'input',
             name: 'id',
-            message: 'Enter employee ID to edit:'
+            message: 'Enter Employee ID to edit:'
         }
     ]);
     const index = employeeList.findIndex(emp => emp.id === id);
@@ -59,7 +59,7 @@ async function deleteEmployee() {
         {
             type: 'input',
             name: 'id',
-            message: 'Enter employee ID to delete:'
+            message: 'Enter Employee ID to delete:'
         }
     ]);
     const index = employeeList.findIndex(emp => emp.id === id);

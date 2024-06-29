@@ -1,6 +1,6 @@
 {
   "name": "@zeeshankhan09/typescript-employee-management-system",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "main": "main.js",
   "type": "module",
   "bin": {
